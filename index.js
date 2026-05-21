@@ -1,5 +1,5 @@
 require('dotenv').config(); // Načte token ze souboru .env
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, EmbedBuilder } = require('discord.js');
 
 // Inicializace bota se správnými intenty
 const client = new Client({
@@ -28,8 +28,11 @@ client.on('messageCreate', async (message) => {
                 await message.delete();
             }
 
-            // První část textu (§1 až §4)
-            const cast1 = `📄 *Pravidlá Dopravného podniku Šakvice, a.s.*
+            // První barevná karta (Embed 1) - Přesný text od §1 do §4
+            const embed1 = new EmbedBuilder()
+                .setColor('#0056B3') // Krásná firemní modrá barva
+                .setDescription(`
+📄 *Pravidlá Dopravného podniku Šakvice, a.s.*
 
 ━━━━━━━━━━━━━━━━━━
 
@@ -81,10 +84,14 @@ client.on('messageCreate', async (message) => {
 
 5. Je zakázané vypisovať vedeniu podniku do súkromných správ ohľadom DP Šakvice
 
-6. Všetky otázky, žiadosti alebo problémy týkajúce sa DP sa riešia výhradne cez ticket sistem`;
+6. Všetky otázky, žiadosti alebo problémy týkajúce sa DP sa riešia výhradne cez ticket systém
+                `);
 
-            // Druhá část textu (§5 až konec)
-            const cast2 = `━━━━━━━━━━━━━━━━━━
+            // Druhá barevná karta (Embed 2) - Přesný text od §5 do konce
+            const embed2 = new EmbedBuilder()
+                .setColor('#0056B3') // Stejná modrá barva pro sjednocení designu
+                .setDescription(`
+━━━━━━━━━━━━━━━━━━
 
 *§5 Uniformy a identita*
 
@@ -133,14 +140,14 @@ client.on('messageCreate', async (message) => {
 
 ━━━━━━━━━━━━━━━━━━
 
-🚍 Dopravný podnik Šakvice, a.s.`;
+🚍 Dopravný podnik Šakvice, a.s.
+                `);
 
-            // Odeslání obou částí hned po sobě
-            await message.channel.send(cast1);
-            await message.channel.send(cast2);
+            // Odeslání obou barevných karet najednou
+            await message.channel.send({ embeds: [embed1, embed2] });
 
         } catch (error) {
-            console.error('Chyba při odesílání rozděleného textu:', error);
+            console.error('Chyba při odesílání barevných pravidel:', error);
         }
     }
 });
