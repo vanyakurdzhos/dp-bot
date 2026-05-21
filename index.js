@@ -32,11 +32,11 @@ client.on('messageCreate', async (message) => {
             const embed1 = new EmbedBuilder()
                 .setColor('#0056B3') // Krásná firemní modrá barva
                 .setDescription(`
-📄 *Pravidlá Dopravného podniku Šakvice, a.s.*
+📄 **Pravidlá Dopravného podniku Šakvice, a.s.**
 
 ━━━━━━━━━━━━━━━━━━
 
-*§1 Základné pravidlá*
+**§1 Základné pravidlá**
 
 1. Každý zamestnanec je povinný správať sa slušne, profesionálne a reprezentatívne
 
@@ -48,7 +48,7 @@ client.on('messageCreate', async (message) => {
 
 ━━━━━━━━━━━━━━━━━━
 
-*§2 Služba a aktivita*
+**§2 Služba a aktivita**
 
 1. Služba musí byť vykonávaná realisticky a v súlade s RP pravidlami
 
@@ -60,7 +60,7 @@ client.on('messageCreate', async (message) => {
 
 ━━━━━━━━━━━━━━━━━━
 
-*§3 Vozidlá*
+**§3 Vozidlá**
 
 1. So služobnými vozidlami DP sa jazdí opatrne, bezpečne a realisticky
 
@@ -72,7 +72,7 @@ client.on('messageCreate', async (message) => {
 
 ━━━━━━━━━━━━━━━━━━
 
-*§4 Komunikácia*
+**§4 Komunikácia**
 
 1. Komunikácia musí prebiehať slušne a bez vulgarizmov
 
@@ -93,7 +93,7 @@ client.on('messageCreate', async (message) => {
                 .setDescription(`
 ━━━━━━━━━━━━━━━━━━
 
-*§5 Uniformy a identita*
+**§5 Uniformy a identita**
 
 1. Počas služby je zamestnanec povinný mať vhodný pracovný outfit alebo uniformu
 
@@ -103,7 +103,7 @@ client.on('messageCreate', async (message) => {
 
 ━━━━━━━━━━━━━━━━━━
 
-*§6 Nábor*
+**§6 Nábor**
 
 1. Nábor nových zamestnancov môže vykonávať iba oprávnený personál
 
@@ -117,7 +117,7 @@ client.on('messageCreate', async (message) => {
 
 ━━━━━━━━━━━━━━━━━━
 
-*§7 Tresty*
+**§7 Tresty**
 
 1. Za porušenie pravidiel môže byť udelené:
 
@@ -130,7 +130,7 @@ client.on('messageCreate', async (message) => {
 
 ━━━━━━━━━━━━━━━━━━
 
-*§8 Záverečné ustanovenia*
+**§8 Záverečné ustanovenia**
 
 1. Neznalosť pravidiel neospravedlňuje ich porušenie
 
