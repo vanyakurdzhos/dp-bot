@@ -34,7 +34,7 @@ client.on('messageCreate', async (message) => {
                 .setDescription(`
 📄 **Pravidlá Dopravného podniku Šakvice, a.s.**
 
-━━━━━━━━━━━━━━━━━━
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
 
 **§1 Základné pravidlá**
 
@@ -46,7 +46,7 @@ client.on('messageCreate', async (message) => {
 
 4. Každý zamestnanec reprezentuje Dopravný podnik Šakvice svojím správaním a vystupovaním
 
-━━━━━━━━━━━━━━━━━━
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
 
 **§2 Služba a aktivita**
 
@@ -58,7 +58,7 @@ client.on('messageCreate', async (message) => {
 
 4. Vedúci pracovníci sú povinní ísť príkladom ostatným členom
 
-━━━━━━━━━━━━━━━━━━
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
 
 **§3 Vozidlá**
 
@@ -91,7 +91,6 @@ client.on('messageCreate', async (message) => {
             const embed2 = new EmbedBuilder()
                 .setColor('#0056B3') // Stejná modrá barva pro sjednocení designu
                 .setDescription(`
-━━━━━━━━━━━━━━━━━━
 
 **§5 Uniformy a identita**
 
@@ -101,7 +100,7 @@ client.on('messageCreate', async (message) => {
 
 3. Meno aj hodnosť musia byť uvedené správne a pravdivo
 
-━━━━━━━━━━━━━━━━━━
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
 
 **§6 Nábor**
 
@@ -115,7 +114,7 @@ client.on('messageCreate', async (message) => {
 
 5. Súkromné alebo individuálne nábory mimo oficiálneho systému sú zakázané
 
-━━━━━━━━━━━━━━━━━━
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
 
 **§7 Tresty**
 
@@ -128,7 +127,7 @@ client.on('messageCreate', async (message) => {
 
 2. Vedenie DP má právo rozhodnúť o primeranom treste podľa závažnosti porušenia pravidiel
 
-━━━━━━━━━━━━━━━━━━
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
 
 **§8 Záverečné ustanovenia**
 
@@ -138,7 +137,7 @@ client.on('messageCreate', async (message) => {
 
 3. Každý člen podniku je povinný tieto pravidlá dodržiavať
 
-━━━━━━━━━━━━━━━━━━
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
 
 🚍 Dopravný podnik Šakvice, a.s.
                 `);
@@ -152,5 +151,13 @@ client.on('messageCreate', async (message) => {
     }
 });
 
-// Přihlášení bota
+}
+            )
+            .setFooter({ text: '🚍 Dopravný podnik Šakvice, a.s.' })
+            .setTimestamp();
+
+        message.channel.send({ embeds: [embed] });
+    }
+});
+
 client.login(process.env.TOKEN);
