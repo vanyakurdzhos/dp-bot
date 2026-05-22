@@ -1,192 +1,189 @@
-require('dotenv').config();
 const {
-    Client,
-    GatewayIntentBits,
-    EmbedBuilder,
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle
+Client,
+GatewayIntentBits,
+ActionRowBuilder,
+ButtonBuilder,
+ButtonStyle
 } = require('discord.js');
 
 const client = new Client({
-    intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent
-    ]
+intents: [
+GatewayIntentBits.Guilds,
+GatewayIntentBits.GuildMessages,
+GatewayIntentBits.MessageContent,
+GatewayIntentBits.GuildMembers
+]
 });
 
-// 🔒 ANTI-SPAM
-const cooldown = new Map();
-const buttonCooldown = new Map();
-
 client.once('ready', () => {
-    console.log('DP Šakvice bot je online!');
+console.log('🚍 DP Šakvice bot je online!');
 });
 
 client.on('messageCreate', async (message) => {
-    if (message.author.bot) return;
 
-    if (message.content === '!pravidla') {
+if (message.author.bot) return;
 
-        const now = Date.now();
-        const userId = message.author.id;
+if (message.content === '!pravidla') {
 
-        // 🔒 cooldown 10s
-        if (cooldown.has(userId)) {
-            const diff = now - cooldown.get(userId);
-            if (diff < 10000) {
-                return message.reply('⏳ Počkaj prosím pár sekúnd pred ďalším použitím príkazu.');
-            }
-        }
-        cooldown.set(userId, now);
+    const button = new ActionRowBuilder().addComponents(
+        new ButtonBuilder()
+            .setCustomId('accept_rules')
+            .setLabel('✔ Prijímam pravidlá')
+            .setStyle(ButtonStyle.Success)
+    );
 
-        try {
+    // PRVÁ ČASŤ
+    await message.channel.send({
+        content: `
 
-            if (message.deletable) {
-                await message.delete();
-            }
+🚍 Dopravný podnik Šakvice, a.s. | <t:${Math.floor(Date.now() / 1000)}:f>
 
-            const timeFooter = `🚍 Dopravný podnik Šakvice, a.s. | <t:${Math.floor(Date.now() / 1000)}:f>`;
+📄 Pravidlá Dopravného podniku Šakvice, a.s.
 
-            // ================= EMBED 1 =================
-            const embed1 = new EmbedBuilder()
-                .setColor('#0056B3')
-                .setDescription(`
-📄 **Pravidlá Dopravného podniku Šakvice, a.s.**
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
 
-━━━━━━━━━━━━━━━━━━
+§1 Základné pravidlá
 
-**§1 Základné pravidlá**
+1. Každý zamestnanec je povinný správať sa slušne, profesionálne a reprezentatívne
 
-1. Každý zamestnanec je povinný správať sa slušne a profesionálne  
-2. Rešpekt voči vedeniu aj kolegom je povinnosťou  
-3. Toxické správanie, konflikty a provokácie sú zakázané  
-4. Každý zamestnanec reprezentuje DP Šakvice  
+2. Rešpekt voči vedeniu, kolegom aj občanom je povinnosťou každého člena podniku
 
-━━━━━━━━━━━━━━━━━━
+3. Vyvolávanie konfliktov, hádok, provokácií alebo toxického správania je zakázané
 
-**§2 Služba a aktivita**
+4. Každý zamestnanec reprezentuje Dopravný podnik Šakvice svojím správaním a vystupovaním
 
-1. Služba musí byť realistická a RP  
-2. AFK bez dôvodu nie je povolené  
-3. Dlhodobá neaktivita môže viesť k vyradeniu  
-4. Vedúci pracovníci musia ísť príkladom  
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
 
-━━━━━━━━━━━━━━━━━━
+§2 Služba a aktivita
 
-**§3 Vozidlá**
+1. Služba musí byť vykonávaná realisticky a v súlade s RP pravidlami
 
-1. Služobné vozidlá sa používajú realisticky  
-2. Úmyselné poškodzovanie je zakázané  
-3. Vozidlá sa po službe odstavujú na určené miesto  
-4. Neoprávnené používanie je zakázané  
+2. AFK počas služby bez vážneho dôvodu nie je povolené
 
-━━━━━━━━━━━━━━━━━━
+3. Dlhodobá neaktivita môže viesť k vyradeniu z podniku
 
-**§4 Komunikácia**
+4. Vedúci pracovníci sú povinní ísť príkladom ostatným členom
 
-1. Komunikácia musí byť slušná a bez vulgarizmov  
-2. Spamovanie je zakázané  
-3. Voice kanály slúžia na prácu  
-4. Rešpektovanie vedenia je povinné  
-5. Zakázané písať vedeniu do DM  
-6. Všetko sa rieši cez ticket systém  
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+§3 Vozidlá
+
+1. So služobnými vozidlami DP sa jazdí opatrne, bezpečne a realisticky
+
+2. Úmyselné poškodzovanie alebo ničenie vozidiel je prísne zakázané
+
+3. Po ukončení služby musia byť vozidlá odstavené na určenom mieste
+
+4. Neoprávnené používanie služobných vozidiel je zakázané
+   `,
+   components: [button]
+   });
+   
+    // DRUHÁ ČASŤ
+ await message.channel.send(`
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+§4 Komunikácia
+
+1. Komunikácia musí prebiehať slušne a bez vulgarizmov
+
+2. Spamovanie alebo zneužívanie textových kanálov je zakázané
+
+3. Hlasové kanály počas služby slúžia predovšetkým na pracovnú komunikáciu
+
+4. Každý člen je povinný rešpektovať pokyny vedenia podniku
+
+5. Je zakázané vypisovať vedeniu podniku do súkromných správ ohľadom DP Šakvice
+
+6. Všetky otázky, žiadosti alebo problémy týkajúce sa DP sa riešia výhradne cez ticket systém
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+§5 Uniformy a identita
+
+1. Počas služby je zamestnanec povinný mať vhodný pracovný outfit alebo uniformu
+
+2. Vydávanie sa za vyššiu hodnosť je prísne zakázané
+
+3. Meno aj hodnosť musia byť uvedené správne a pravdivo
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+§6 Nábor
+
+1. Nábor nových zamestnancov môže vykonávať iba oprávnený personál
+
+2. Uchádzači sú povinní rešpektovať pokyny náborového tímu
+
+3. Akákoľvek protekcia alebo zvýhodňovanie pri nábore je zakázané
+
+4. Je zakázané vypisovať alebo sa neustále pýtať, kedy bude nábor
+
+5. Súkromné alebo individuálne nábory mimo oficiálneho systému sú zakázané
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+§7 Tresty
+
+1. Za porušenie pravidiel môže byť udelené:
+
+° upozornenie,
+° pokarhanie,
+° suspendácia,
+° vyradenie z podniku.
+
+2. Vedenie DP má právo rozhodnúť o primeranom treste podľa závažnosti porušenia pravidiel
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+§8 Záverečné ustanovenia
+
+1. Neznalosť pravidiel neospravedlňuje ich porušenie
+
+2. Vedenie Dopravného podniku Šakvice má právo pravidlá kedykoľvek upraviť alebo doplniť
+
+3. Každý člen podniku je povinný tieto pravidlá dodržiavať
+
+🚍 Dopravný podnik Šakvice, a.s. | <t:${Math.floor(Date.now() / 1000)}:f>
 `);
 
-            // ================= EMBED 2 =================
-            const embed2 = new EmbedBuilder()
-                .setColor('#0056B3')
-                .setDescription(`
-**§5 Uniformy a identita**
+}
 
-1. Povinná uniforma alebo vhodný pracovný outfit  
-2. Vydávanie sa za vyššiu hodnosť je zakázané  
-3. Meno a hodnosť musia byť pravdivé  
-
-━━━━━━━━━━━━━━━━━━
-
-**§6 Nábor**
-
-1. Nábor vykonáva iba oprávnený personál  
-2. Uchádzači musia rešpektovať pokyny  
-3. Protekcia je zakázaná  
-4. Neptajte sa neustále na nábory  
-5. Súkromné nábory sú zakázané  
-
-━━━━━━━━━━━━━━━━━━
-
-**§7 Tresty**
-
-1. Možné tresty:
-• upozornenie  
-• pokarhanie  
-• suspendácia  
-• vyradenie  
-
-2. Vedenie rozhoduje podľa závažnosti  
-
-━━━━━━━━━━━━━━━━━━
-
-**§8 Záverečné ustanovenia**
-
-1. Neznalosť pravidiel neospravedlňuje porušenie  
-2. Vedenie si vyhradzuje právo pravidlá meniť  
-3. Každý člen je povinný pravidlá dodržiavať  
-
-━━━━━━━━━━━━━━━━━━
-
-🚍 Dopravný podnik Šakvice, a.s.
-`)
-                .setFooter({ text: timeFooter });
-
-            // ================= BUTTON =================
-            const button = new ButtonBuilder()
-                .setCustomId('accept_rules')
-                .setLabel('✔ Prijímam pravidlá')
-                .setStyle(ButtonStyle.Success);
-
-            const row = new ActionRowBuilder()
-                .addComponents(button);
-
-            await message.channel.send({
-                embeds: [embed1, embed2],
-                components: [row]
-            });
-
-        } catch (error) {
-            console.error(error);
-        }
-    }
 });
 
-// ================= BUTTON HANDLER =================
 client.on('interactionCreate', async (interaction) => {
-    if (!interaction.isButton()) return;
 
-    if (interaction.customId === 'accept_rules') {
+if (!interaction.isButton()) return;
 
-        const now = Date.now();
-        const userId = interaction.user.id;
+if (interaction.customId === 'accept_rules') {
 
-        if (buttonCooldown.has(userId)) {
-            const diff = now - buttonCooldown.get(userId);
+    const role = interaction.guild.roles.cache.find(
+        r => r.name === 'Súhlasí s pravidlami'
+    );
 
-            if (diff < 10000) {
-                return interaction.reply({
-                    content: '⏳ Pravidlá si už potvrdil, počkaj chvíľu.',
-                    ephemeral: true
-                });
-            }
-        }
-
-        buttonCooldown.set(userId, now);
-
-        await interaction.reply({
-            content: '✔ Ďakujeme! Pravidlá boli úspešne prijaté.',
+    if (!role) {
+        return interaction.reply({
+            content: '❌ Rola "Súhlasí s pravidlami" nebola nájdená.',
             ephemeral: true
         });
     }
+
+    if (interaction.member.roles.cache.has(role.id)) {
+        return interaction.reply({
+            content: '⏳ Pravidlá si už prijal.',
+            ephemeral: true
+        });
+    }
+
+    await interaction.member.roles.add(role);
+
+    await interaction.reply({
+        content: '✔ Úspešne si prijal pravidlá a získal rolu.',
+        ephemeral: true
+    });
+}
+
 });
 
 client.login(process.env.TOKEN);
