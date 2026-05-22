@@ -1,4 +1,7 @@
-const { Client, GatewayIntentBits, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+// Na úplně prvním řádku načteme skrytý soubor .env s tokenem
+require('dotenv').config();
+
+const { Client, GatewayIntentBits, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } = require('discord.js');
 
 const client = new Client({ 
     intents: [ 
@@ -9,81 +12,53 @@ const client = new Client({
     ] 
 });
 
-client.once('ready', () => { 
-    console.log('🚍 DP Šakvice bot je online!'); 
+// Opraveno varování (ready -> clientReady)
+client.once('clientReady', () => { 
+    console.log('🚍 DP Šakvice bot je online a připraven!'); 
 });
 
 client.on('messageCreate', async (message) => { 
     if (message.author.bot) return; 
 
     if (message.content === '!pravidla') { 
-        // Vytvorenie tlačidla
-        const button = new ActionRowBuilder().addComponents( 
+        // Vytvoření zeleného tlačítka pod pravidla uvnitř ActionRow
+        const row = new ActionRowBuilder().addComponents( 
             new ButtonBuilder() 
                 .setCustomId('accept_rules') 
                 .setLabel('✔ Prijímam pravidlá') 
                 .setStyle(ButtonStyle.Success) 
         ); 
 
-        // PRVÁ ČASŤ (Odosiela sa BEZ tlačidla)
-        await message.channel.send({ 
-            content: `🚍 Dopravný podnik Šakvice, a.s. | <t:${Math.floor(Date.now() / 1000)}:f>
-📄 Pravidlá Dopravného podniku Šakvice, a.s.
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-*§1 Základné pravidlá*
-1. Každý zamestnanec je povinný správať sa slušne, profesionálne a reprezentatívne
-2. Rešpekt voči vedeniu, kolegom aj občanom je povinnosťou každého člena podniku
-3. Vyvolávanie konfliktov, hádok, provokácií alebo toxického správania je zakázané
-4. Každý zamestnanec reprezentuje Dopravný podnik Šakvice svojím správaním a vystupovaním
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-*§2 Služba a aktivita*
-1. Služba musí byť vykonávaná realisticky a v súlade s RP pravidlami
-2. AFK počas služby bez vážneho dôvodu nie je povolené
-3. Dlhodobá neaktivita môže viesť k vyradeniu z podniku
-4. Vedúci pracovníci sú povinní ísť príkladom ostatným členom
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-*§3 Vozidlá*
-1. So služobnými vozidlami DP sa jazdí opatrne, bezpečne a realisticky
-2. Úmyselné poškodzovanie alebo ničenie vozidiel je prísne zakázané
-3. Po ukončení služby musia byť vozidlá odstavené na určenom mieste
-4. Neoprávnené používanie služobných vozidiel je zakázané`
-        }); 
+        const casovky = `<t:${Math.floor(Date.now() / 1000)}:f>`;
 
-        // DRUHÁ ČASŤ (Tlačidlo je presunuté sem na koniec textu)
-        await message.channel.send({
-            content: `⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-*§4 Komunikácia*
-1. Komunikácia musí prebiehať slušne a bez vulgarizmov
-2. Spamovanie alebo zneužívanie textových kanálov je zakázané
-3. Hlasové kanály počas služby slúžia predovšetkým na pracovnú komunikáciu
-4. Každý člen je povinný rešpektovať pokyny vedenia podniku
-5. Je zakázané vypisovať vedeniu podniku do súkromných správ ohľadom DP Šakvice
-6. Všetky otázky, žiadosti alebo problémy týkajúce sa DP sa riešia výhradne cez ticket systém
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-*§5 Uniformy a identita*
-1. Počas služby je zamestnanec povinný mať vhodný pracovný outfit alebo uniformu
-2. Vydávanie sa za vyššiu hodnosť je prísne zakázané
-3. Meno aj hodnosť musia byť uvedené správne a pravdivo
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-*§6 Nábor*
-1. Nábor nových zamestnancov môže vykonávať iba oprávnený personál
-2. Uchádzači sú povinní rešpektovať pokyny náborového tímu
-3. Akákoľvek protekcia alebo zvýhodňovanie pri nábore je zakázané
-4. Je zakázané vypisovať alebo sa neustále pýtať, kedy bude nábor
-5. Súkromné alebo individuálne nábory mimo oficiálneho systému sú zakázané
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-*§7 Tresty*
-1. Za porušenie pravidiel môže byť udelené: ° upozornenie, ° pokarhanie, ° suspendácia, ° vyradenie z podniku.
-2. Vedenie DP má právo rozhodnúť o primeranom treste podľa závažnosti porušenia pravidiel
-⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
-*§8 Záverečné ustanovenia*
-1. Neznalosť pravidiel neospravedlňuje ich porušenie
-2. Vedenie Dopravného podniku Šakvice má právo pravidlá kedykoľvek upraviť alebo doplniť
-3. Každý člen podniku je povinný tieto pravidlá dodržiavať
+        // PRVNÍ BAREVNÝ PANEL (Embed)
+        const embed1 = new EmbedBuilder()
+            .setColor('#0099ff') // Krásná modrá barva
+            .setTitle('🚍 Dopravný podnik Šakvice, a.s.')
+            .setDescription(`📄 **Pravidlá Dopravného podniku Šakvice, a.s.**\nAktualizované: ${casovky}`)
+            .addFields(
+                { name: '§1 Základné pravidlá', value: '1. Každý zamestnanec je povinný správať sa slušne, profesionálne a reprezentatívne.\n2. Rešpekt voči vedeniu, kolegom aj občanom je povinnosťou každého člena podniku.\n3. Vyvolávanie konfliktov, hádok, provokácií alebo toxického správania je zakázané.\n4. Každý zamestnanec reprezentuje Dopravný podnik Šakvice svojím správaním a vystupovaním.' },
+                { name: '§2 Služba a aktivita', value: '1. Služba musí byť vykonávaná realisticky a v súlade s RP pravidlami.\n2. AFK počas služby bez vážneho dôvodu nie je povolené.\n3. Dlhodobá neaktivita môže viesť k vyradeniu z podniku.\n4. Vedúci pracovníci sú povinní ísť príkladom ostatným členom.' },
+                { name: '§3 Vozidlá', value: '1. So služobnými vozidlami DP sa jazdí opatrne, bezpečne a realisticky.\n2. Úmyselné poškodzovanie alebo ničenie vozidiel je prísne zakázané.\n3. Po ukončení služby musia byť vozidlá odstavené na určenom mieste.\n4. Neoprávnené používanie služobných vozidiel je zakázané.' }
+            );
 
-🚍 Dopravný podnik Šakvice, a.s. | <t:${Math.floor(Date.now() / 1000)}:f>`,
-            components: [button] // Tlačidlo sa zobrazí pod druhou časťou textu
-        }); 
+        // DRUHÝ BAREVNÝ PANEL (Embed)
+        const embed2 = new EmbedBuilder()
+            .setColor('#0099ff')
+            .addFields(
+                { name: '§4 Komunikácia', value: '1. Komunikácia mustí prebiehať slušne a bez vulgarizmov.\n2. Spamovanie alebo zneužívanie textových kanálov je zakázané.\n3. Hlasové kanály počas služby slúžia predovšetkým na pracovnú komunikáciu.\n4. Každý člen je povinný rešpektovať pokyny vedenia podniku.\n5. Je zakázané vypisovať vedeniu podniku do súkromných správ ohľadom DP Šakvice.\n6. Všetky otázky, žiadosti alebo problémy týkajíce sa DP sa riešia výhradne cez ticket systém.' },
+                { name: '§5 Uniformy a identita', value: '1. Počas služby je zamestnanec povinný mať vhodný pracovný outfit alebo uniformu.\n2. Vydávanie sa za vyššiu hodnosť je prísne zakázané.\n3. Meno aj hodnosť musia byť uvedené správne a pravdivo.' },
+                { name: '§6 Nábor', value: '1. Nábor nových zamestnancov môže vykonávať iba oprávnený personál.\n2. Uchádzači sú povinní rešpektovať pokyny náborového tímu.\n3. Akákoľvek protekcia alebo zvýhodňovanie pri nábore je zakázané.\n4. Je zakázané vypisovať alebo sa neustále pýtať, kedy bude nábor.\n5. Súkromné alebo individuálne nábory mimo oficiálneho systému sú zakázané.' },
+                { name: '§7 Tresty', value: '1. Za porušenie pravidiel môže byť udelené: upozornenie, pokarhanie, suspendácia, vyradenie z podniku.\n2. Vedenie DP má právo rozhodnúť o primeranom treste podľa závažnosti porušenia pravidiel.' },
+                { name: '§8 Záverečné ustanovenia', value: '1. Neznalosť pravidiel neospravedlňuje ich porušenie.\n2. Vedenie Dopravného podniku Šakvice má právo pravidlá kedykoľvek upraviť alebo doplniť.\n3. Každý člen podniku je povinný tieto pravidlá dodržiavať.' }
+            )
+            .setFooter({ text: `🚍 Dopravný podnik Šakvice, a.s.` });
+
+        // Odešleme první panel
+        await message.channel.send({ embeds: [embed1] }); 
+
+        // Odešleme druhý panel a pod něj přiložíme zelené tlačítko
+        await message.channel.send({ embeds: [embed2], components: [row] }); 
     } 
 });
 
@@ -91,7 +66,6 @@ client.on('interactionCreate', async (interaction) => {
     if (!interaction.isButton()) return; 
 
     if (interaction.customId === 'accept_rules') { 
-        // Hľadanie role podľa názvu
         const role = interaction.guild.roles.cache.find(r => r.name === 'Súhlasí s pravidlami'); 
 
         if (!role) { 
@@ -107,4 +81,5 @@ client.on('interactionCreate', async (interaction) => {
     } 
 });
 
+// Zde se bezpečně načte token ze souboru .env (tento řádek už NEMĚŇTE)
 client.login(process.env.TOKEN);
