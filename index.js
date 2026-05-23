@@ -37,7 +37,7 @@ client.on('messageCreate', async (message) => {
         const ted = new Date();
         const datum = ted.toLocaleDateString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Europe/Prague' });
         const cas = ted.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Prague' });
-        const textPaticky = `🚍 Dopravný podnik Šakvice, a.s. | ${datum} ${cas}`;
+        const textPaticky = `🚍 Dopravný podnik Šakvice, a.s. | ${datum}${cas}`;
 
         const embed1 = new EmbedBuilder()
             .setColor(barvaEmbedu)
