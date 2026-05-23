@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 const { Client, GatewayIntentBits, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder, MessageFlags } = require('discord.js');
 
 const client = new Client({ 
@@ -11,7 +10,7 @@ const client = new Client({
     ] 
 });
 
-client.once('clientReady', () => { 
+client.once('ready', () => { 
     console.log('🚍 DP Šakvice bot je online a připraven!'); 
 });
 
@@ -19,11 +18,7 @@ client.on('messageCreate', async (message) => {
     if (message.author.bot) return; 
 
     if (message.content === '!dppravidla') { 
-        try {
-            await message.delete();
-        } catch (error) {
-            console.error(error);
-        }
+        try { await message.delete(); } catch (e) { console.error(e); }
 
         const row = new ActionRowBuilder().addComponents( 
             new ButtonBuilder() 
@@ -33,15 +28,8 @@ client.on('messageCreate', async (message) => {
         ); 
 
         const barvaEmbedu = '#0052b4'; 
-
-        const aktualniDatum = new Date();
-        const den = String(aktualniDatum.getDate()).padStart(2, '0');
-        const mesic = String(aktualniDatum.getMonth() + 1).padStart(2, '0');
-        const rok = aktualniDatum.getFullYear();
-        const hodiny = String(aktualniDatum.getHours()).padStart(2, '0');
-        const minuty = String(aktualniDatum.getMinutes()).padStart(2, '0');
-
-        const textPaticky = `🚍 Dopravný podnik Šakvice, a.s. | ${den}.${mesic}.${rok} ${hodiny}:${minuty}`;
+        const timestamp = Math.floor(Date.now() / 1000);
+        const textPaticky = `Dopravný podnik Šakvice, a.s. • Dnes v ${new Date().toLocaleTimeString('cs-CZ', {hour: '2-digit', minute:'2-digit'})}`;
 
         const embed1 = new EmbedBuilder()
             .setColor(barvaEmbedu)
@@ -73,7 +61,7 @@ client.on('messageCreate', async (message) => {
                            '3. Hlasové kanály počas služby slúžia predovšetkým na pracovnú komunikáciu\n\n' +
                            '4. Každý člen je povinný rešpektovať pokyny vedenia podniku\n\n' +
                            '5. Je zakázané vypisovať vedeniu podniku do súkromných správ ohľadom DP Šakvice\n\n' +
-                           '6. Všetky oncologistické otázky, žiadosti alebo problémy týkajíci sa DP sa riešia výhradne cez ticket systém\n\n' +
+                           '6. Všetky otázky, žiadosti alebo problémy týkajúce se DP sa riešia výhradne cez ticket systém\n\n' +
                            '⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n\n' +
                            '**§5 Uniformy a identita**\n\n' +
                            '1. Počas služby je zamestnanec povinný mať vhodný pracovný outfit alebo uniformu\n\n' +
@@ -81,7 +69,7 @@ client.on('messageCreate', async (message) => {
                            '3. Meno aj hodnosť musí byť uvedené správne a pravdivo\n\n' +
                            '⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n\n' +
                            '**§6 Nábor**\n\n' +
-                           '1. Nábor nových zamestnancov může vykonávať iba oprávnený personál\n\n' +
+                           '1. Nábor nových zamestnancov môže vykonávať iba oprávnený personál\n\n' +
                            '2. Uchádzači sú povinní rešpektovať pokyny náborového tímu\n\n' +
                            '3. Akákoľvek protekcia alebo zvýhodňovanie pri nábore je zakázané\n\n' +
                            '4. Je zakázané vypisovať alebo sa neustále pýtať, kedy bude nábor\n\n' +
@@ -98,7 +86,7 @@ client.on('messageCreate', async (message) => {
                            '**§8 Záverečné ustanovenia**\n\n' +
                            '1. Neznalosť pravidiel neospravedlňuje ich porušenie\n\n' +
                            '2. Vedenie Dopravného podniku Šakvice má právo pravidlá kedykoľvek upraviť alebo doplniť\n\n' +
-                           '3. Každý člen podniku je povinný tieto pravidlá dodržiaвать')
+                           '3. Každý člen podniku je povinný tieto pravidlá dodržiavať')
             .setFooter({ text: textPaticky });
 
         await message.channel.send({ embeds: [embed1] }); 
@@ -120,7 +108,7 @@ client.on('interactionCreate', async (interaction) => {
         } 
 
         if (interaction.member.roles.cache.has(role.id)) { 
-            return interaction.editReply({ content: '⏳ Pravidlá si už prijal.' }); 
+            return interaction.editReply({ content: '⏳ Pravidlá už si prijal.' }); 
         } 
 
         try {
