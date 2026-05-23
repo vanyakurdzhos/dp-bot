@@ -10,8 +10,14 @@ const client = new Client({
     ] 
 });
 
-client.once('ready', () => { 
+client.once('ready', async () => { 
     console.log('🚍 DP Šakvice bot je online a připraven!'); 
+    try {
+        await client.application.commands.set([]);
+        console.log('✔ Staré lomítkové příkazy byly kompletně smazány z API.');
+    } catch (e) {
+        console.error(e);
+    }
 });
 
 client.on('messageCreate', async (message) => { 
@@ -28,7 +34,6 @@ client.on('messageCreate', async (message) => {
         ); 
 
         const barvaEmbedu = '#0052b4'; 
-        
         const ted = new Date();
         const datum = ted.toLocaleDateString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Europe/Prague' });
         const cas = ted.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Prague' });
@@ -53,7 +58,7 @@ client.on('messageCreate', async (message) => {
                            '**§3 Vozidlá**\n\n' +
                            '1. So služobnými vozidlami DP sa jazdí opatrne, bezpečne a realisticky\n\n' +
                            '2. Úmyselné poškodzovanie alebo ničenie vozidiel je prísne zakázané\n\n' +
-                           '3. Po ukončení služby musia byť vozidlá odstavené na určenom mieste\n\n' +
+                           '3. Po ukončení služby musí byť vozidlá odstavené na určenom mieste\n\n' +
                            '4. Neoprávnené používanie služobných vozidiel je zakázané');
 
         const embed2 = new EmbedBuilder()
@@ -107,11 +112,11 @@ client.on('interactionCreate', async (interaction) => {
         const role = roles.find(r => r.name === '✓ • Súhlasí s pravidlami'); 
 
         if (!role) { 
-            return interaction.editReply({ content: '❌ Rola "✓ • Súhlasí s pravidlami" nebola nájdená na serveri.' }); 
+            return interaction.editReply({ content: '❌ Rola "✓ • Súhlasí s pravidlami" nebola nájdená.' }); 
         } 
 
         if (interaction.member.roles.cache.has(role.id)) { 
-            return interaction.editReply({ content: '⏳ Pravidlá si už prijal.' }); 
+            return interaction.editReply({ content: '⏳ Pravidlá už si prijal.' }); 
         } 
 
         try {
