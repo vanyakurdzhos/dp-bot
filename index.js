@@ -68,12 +68,12 @@ client.on('messageCreate', async (message) => {
         const embed2 = new EmbedBuilder()
             .setColor(barvaEmbedu)
             .setDescription('**§4 Komunikácia**\n\n' +
-                           '1. Komunikácia mustí prebiehať slušne and bez vulgarizmov\n\n' +
+                           '1. Komunikácia mustí prebiehať slušne a bez vulgarizmov\n\n' +
                            '2. Spamovanie alebo zneužívanie textových kanálov je zakázané\n\n' +
                            '3. Hlasové kanály počas služby slúžia predovšetkým na pracovnú komunikáciu\n\n' +
                            '4. Každý člen je povinný rešpektovať pokyny vedenia podniku\n\n' +
                            '5. Je zakázané vypisovať vedeniu podniku do súkromných správ ohľadom DP Šakvice\n\n' +
-                           '6. Všetky otázky, žiadosti alebo problémy týkajíci sa DP sa riešia výhradne cez ticket systém\n\n' +
+                           '6. Všetky oncologistické otázky, žiadosti alebo problémy týkajíci sa DP sa riešia výhradne cez ticket systém\n\n' +
                            '⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n\n' +
                            '**§5 Uniformy a identita**\n\n' +
                            '1. Počas služby je zamestnanec povinný mať vhodný pracovný outfit alebo uniformu\n\n' +
@@ -98,7 +98,7 @@ client.on('messageCreate', async (message) => {
                            '**§8 Záverečné ustanovenia**\n\n' +
                            '1. Neznalosť pravidiel neospravedlňuje ich porušenie\n\n' +
                            '2. Vedenie Dopravného podniku Šakvice má právo pravidlá kedykoľvek upraviť alebo doplniť\n\n' +
-                           '3. Každý člen podniku je povinný tieto pravidlá dodržiavať')
+                           '3. Každý člen podniku je povinný tieto pravidlá dodržiaвать')
             .setFooter({ text: textPaticky });
 
         await message.channel.send({ embeds: [embed1] }); 
