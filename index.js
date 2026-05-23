@@ -56,38 +56,39 @@ client.on('messageCreate', async (message) => {
                            '1. Služba musí byť vykonávaná realisticky a v súlade s RP pravidlami\n\n' +
                            '2. AFK počas služby bez vážneho dôvodu nie je povolené\n\n' +
                            '3. Dlhodobá neaktivita môže viesť k vyradeniu z podniku\n\n' +
-                           '4. Vedúci pracovníci sú povinní ísť príkladom ostatným članom\n\n' +
+                           '4. Vedúci pracovníci sú povinní ísť príkladom ostatným členom\n\n' +
                            '⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n\n' +
                            '**§3 Vozidlá**\n\n' +
                            '1. So služobnými vozidlami DP sa jazdí opatrne, bezpečne a realisticky\n\n' +
                            '2. Úmyselné poškodzovanie alebo ničenie vozidiel je prísne zakázané\n\n' +
-                           '3. Po ukončení služby musí byť vozidlá odstavené na určenom mieste\n\n' +
+                           '3. Po ukončení služby musia byť vozidlá odstavené na určenom mieste\n\n' +
                            '4. Neoprávnené používanie služobných vozidiel je zakázané');
 
         const embed2 = new EmbedBuilder()
             .setColor(barvaEmbedu)
             .setDescription('**§4 Komunikácia**\n\n' +
-                           '1. Komunikácia mustí prebiehať slušne a bez vulgarizmov\n\n' +
+                           '1. Komunikácia musí prebiehať slušne a bez vulgarizmov\n\n' +
                            '2. Spamovanie alebo zneužívanie textových kanálov je zakázané\n\n' +
                            '3. Hlasové kanály počas služby slúžia predovšetkým na pracovnú komunikáciu\n\n' +
                            '4. Každý člen je povinný rešpektovať pokyny vedenia podniku\n\n' +
                            '5. Je zakázané vypisovať vedeniu podniku do súkromných správ ohľadom DP Šakvice\n\n' +
-                           '6. Všetky otázky, žiadosti alebo problémy týkajíce se DP sa riešia výhradne cez ticket systém\n\n' +
+                           '6. Všetky otázky, žiadosti alebo problémy týkajúce sa DP sa riešia výhradne cez ticket systém\n\n' +
+                           '7. Je prísne zakázané pingovať vedenie bez akéhokoľvek vážneho dôvodu\n\n' +
                            '⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n\n' +
                            '**§5 Uniformy a identita**\n\n' +
                            '1. Počas služby je zamestnanec povinný mať vhodný pracovný outfit alebo uniformu\n\n' +
                            '2. Vydávanie sa za vyššiu hodnosť je prísne zakázané\n\n' +
-                           '3. Meno aj hodnosť musí byť uvedené správne and pravdivo\n\n' +
+                           '3. Meno aj hodnosť musia byť uvedené správne a pravdivo\n\n' +
                            '⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n\n' +
                            '**§6 Nábor**\n\n' +
-                           '1. Nábor nových zamestnancov může vykonávať iba oprávnený personál\n\n' +
+                           '1. Nábor nových zamestnancov môže vykonávať iba oprávnený personál\n\n' +
                            '2. Uchádzači sú povinní rešpektovať pokyny náborového tímu\n\n' +
                            '3. Akákoľvek protekcia alebo zvýhodňovanie pri nábore je zakázané\n\n' +
                            '4. Je zakázané vypisovať alebo sa neustále pýtať, kedy bude nábor\n\n' +
                            '5. Súkromné alebo individuálne nábory mimo oficiálneho systému sú zakázané\n\n' +
                            '⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n\n' +
                            '**§7 Tresty**\n\n' +
-                           '1. Za porušenie pravidiel může byť udelené:\n\n' +
+                           '1. Za porušenie pravidiel môže byť udelené:\n\n' +
                            '° upozornenie,\n\n' +
                            '° pokarhanie,\n\n' +
                            '° suspendácia,\n\n' +
