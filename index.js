@@ -14,7 +14,6 @@ client.once('ready', async () => {
     console.log('🚍 DP Šakvice bot je online a připraven!'); 
     try {
         await client.application.commands.set([]);
-        console.log('✔ Staré lomítkové příkazy byly kompletně smazány z API.');
     } catch (e) {
         console.error(e);
     }
@@ -23,7 +22,7 @@ client.once('ready', async () => {
 client.on('messageCreate', async (message) => { 
     if (message.author.bot) return; 
 
-    if (message.content === '!dpp.pravidla') { 
+    if (message.content === '!pravidla') { 
         try { await message.delete(); } catch (e) { console.error(e); }
 
         const row = new ActionRowBuilder().addComponents( 
@@ -35,9 +34,13 @@ client.on('messageCreate', async (message) => {
 
         const barvaEmbedu = '#0052b4'; 
         const ted = new Date();
-        const datum = ted.toLocaleDateString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Europe/Prague' });
+        
+        const den = String(ted.getDate()).padStart(2, '0');
+        const mesic = String(ted.getMonth() + 1).padStart(2, '0');
+        const rok = ted.getFullYear();
         const cas = ted.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Prague' });
-        const textPaticky = `🚍 Dopravný podnik Šakvice, a.s. | ${datum} ${cas}`;
+        
+        const textPaticky = `🚍 Dopravný podnik Šakvice, a.s. | ${den}.${mesic}.${rok} ${cas}`;
 
         const embed1 = new EmbedBuilder()
             .setColor(barvaEmbedu)
@@ -69,12 +72,12 @@ client.on('messageCreate', async (message) => {
                            '3. Hlasové kanály počas služby slúžia predovšetkým na pracovnú komunikáciu\n\n' +
                            '4. Každý člen je povinný rešpektovať pokyny vedenia podniku\n\n' +
                            '5. Je zakázané vypisovať vedeniu podniku do súkromných správ ohľadom DP Šakvice\n\n' +
-                           '6. Všetky otázky, žiadosti alebo problémy týkajúce se DP sa riešia výhradne cez ticket systém\n\n' +
+                           '6. Všetky otázky, žiadosti alebo problémy týkajíce se DP sa riešia výhradne cez ticket systém\n\n' +
                            '⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n\n' +
                            '**§5 Uniformy a identita**\n\n' +
                            '1. Počas služby je zamestnanec povinný mať vhodný pracovný outfit alebo uniformu\n\n' +
                            '2. Vydávanie sa za vyššiu hodnosť je prísne zakázané\n\n' +
-                           '3. Meno aj hodnosť musí byť uvedené správne a pravdivo\n\n' +
+                           '3. Meno aj hodnosť musí byť uvedené správne and pravdivo\n\n' +
                            '⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n\n' +
                            '**§6 Nábor**\n\n' +
                            '1. Nábor nových zamestnancov může vykonávať iba oprávnený personál\n\n' +
@@ -112,7 +115,7 @@ client.on('interactionCreate', async (interaction) => {
         const role = roles.find(r => r.name === '✓ • Súhlasí s pravidlami'); 
 
         if (!role) { 
-            return interaction.editReply({ content: '❌ Rola "✓ • Súhlasí s pravidlami" nebola nájdená.' }); 
+            return interaction.editReply({ content: '❌ Rola "✓ • Súhlasí s pravidlami" nebola nájdená na serveri.' }); 
         } 
 
         if (interaction.member.roles.cache.has(role.id)) { 
