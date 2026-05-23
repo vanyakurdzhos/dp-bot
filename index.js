@@ -17,7 +17,7 @@ client.once('ready', () => {
 client.on('messageCreate', async (message) => { 
     if (message.author.bot) return; 
 
-    if (message.content === '!dppravidla') { 
+    if (message.content === '!dpp.pravidla') { 
         try { await message.delete(); } catch (e) { console.error(e); }
 
         const row = new ActionRowBuilder().addComponents( 
@@ -28,9 +28,10 @@ client.on('messageCreate', async (message) => {
         ); 
 
         const barvaEmbedu = '#0052b4'; 
+        
         const ted = new Date();
-        const datum = ted.toLocaleDateString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric' });
-        const cas = ted.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' });
+        const datum = ted.toLocaleDateString('cs-CZ', { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Europe/Prague' });
+        const cas = ted.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Prague' });
         const textPaticky = `🚍 Dopravný podnik Šakvice, a.s. | ${datum} ${cas}`;
 
         const embed1 = new EmbedBuilder()
@@ -71,7 +72,7 @@ client.on('messageCreate', async (message) => {
                            '3. Meno aj hodnosť musí byť uvedené správne a pravdivo\n\n' +
                            '⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n\n' +
                            '**§6 Nábor**\n\n' +
-                           '1. Nábor nových zamestnancov môže vykonávať iba oprávnený personál\n\n' +
+                           '1. Nábor nových zamestnancov může vykonávať iba oprávnený personál\n\n' +
                            '2. Uchádzači sú povinní rešpektovať pokyny náborového tímu\n\n' +
                            '3. Akákoľvek protekcia alebo zvýhodňovanie pri nábore je zakázané\n\n' +
                            '4. Je zakázané vypisovať alebo sa neustále pýtať, kedy bude nábor\n\n' +
